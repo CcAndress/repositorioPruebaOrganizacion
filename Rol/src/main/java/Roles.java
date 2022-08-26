@@ -1,24 +1,31 @@
 import java.util.Scanner;
 
 public class Roles {
-    private String sesion;
+    static String usuario;
+    static String sesion;
 
     public Roles() {
     }
     public void tipoUsuario() {
-        Scanner type_user = new Scanner(System.in);
-        System.out.println("Digite el tipo de usuario: Administrador / Operario");
-        String usuario = type_user.nextLine();
-        if (usuario.equalsIgnoreCase("Operario")) {
-            sesion="Operario";
-            System.out.println("La sesión es : "+sesion);
-        }
-        else if (usuario.equalsIgnoreCase("Administrador")) {
-            sesion="Administrador";
-            System.out.println("La sesion es: "+sesion);
+
+        Scanner type_emp = new Scanner(System.in);
+        System.out.println("Tipo usuario: ");
+        Scanner type_usuario = new Scanner(System.in);
+        String type_empleado = type_emp.nextLine();
+        if (type_empleado.equalsIgnoreCase("Opera")) {
+            sesion = "Operario";
+            System.out.println("Digite el nombre de usuario: ");
+            usuario = type_usuario.nextLine();
+            System.out.println("La sesión es : " + sesion);
+        } else if (type_empleado.equalsIgnoreCase("Admin")) {
+            sesion = "Administrador";
+            System.out.println("Digite el nombre de usuario: ");
+            usuario = type_usuario.nextLine();
+            System.out.println("La sesion es: " + sesion);
         } else {
-            System.out.println("No tiene sesión iniciada ");
-            sesion=null;
+            System.out.println("Debe iniciar sesion para continuar ");
+            usuario = null;
+            sesion = null;
             System.exit(0);
         }
     }
