@@ -24,8 +24,6 @@ public class Roles {
             System.out.println("La sesion es: " + sesion);
         } else {
             System.out.println("Debe iniciar sesion para continuar ");
-            usuario = null;
-            sesion = null;
             System.exit(0);
         }
     }
