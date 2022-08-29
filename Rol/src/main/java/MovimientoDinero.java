@@ -1,10 +1,18 @@
 import java.util.Scanner;
 
+<<<<<<< Updated upstream:src/main/java/MovimientoDinero.java
+=======
+
+>>>>>>> Stashed changes:Rol/src/main/java/MovimientoDinero.java
 public abstract class MovimientoDinero {
     protected int transacciones, retiro, deposito;
     private static int saldo;
     Scanner entrada = new Scanner(System.in);
 
+<<<<<<< Updated upstream:src/main/java/MovimientoDinero.java
+=======
+
+>>>>>>> Stashed changes:Rol/src/main/java/MovimientoDinero.java
     public void Operaciones() {
         int bandera = 0;
         int seleccion = 0;
@@ -58,4 +66,8 @@ public abstract class MovimientoDinero {
     public void setSaldo(int saldo){
         this.saldo = saldo;
     }
+<<<<<<< Updated upstream:src/main/java/MovimientoDinero.java
 }
+=======
+}
+>>>>>>> Stashed changes:Rol/src/main/java/MovimientoDinero.java
