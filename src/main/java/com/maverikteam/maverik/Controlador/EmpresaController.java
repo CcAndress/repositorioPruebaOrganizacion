@@ -3,6 +3,7 @@ package com.maverikteam.maverik.Controlador;
 import com.maverikteam.maverik.DTO.EmpleadoDTO;
 import com.maverikteam.maverik.DTO.EmpresasDTO;
 import com.maverikteam.maverik.DTO.MovimientoDTO;
+import com.maverikteam.maverik.DTO.PlainEmpresaDTO;
 import com.maverikteam.maverik.Servicios.impl.EmpleadoServicio;
 import com.maverikteam.maverik.Servicios.impl.EmpresaServicio;
 import com.maverikteam.maverik.Servicios.impl.MovimientoServicio;
@@ -97,11 +98,32 @@ public class EmpresaController {
     @GetMapping("/empresas/{id}/movimiento/{mov_id}")
     public ResponseEntity<List<MovimientoDTO>> getMovimientoDinero(@PathVariable final Integer id,
                                                                    @PathVariable final Integer mov_id) throws Exception {
-        Empresa empresa = serv.readById((id));
-        List<MovimientoDinero> movimientoDinero = sermov.getMovimientoDinero();
-        List<MovimientoDTO> movimientoDTOS = movimientoDinero.stream().map(MovimientoDTO::from).collect(Collectors.toList());
+        Empresa empresa = serv.readById(id);
+
+        List<MovimientoDTO> movimientoDTOS = empresa.getMovimientos().stream().map(MovimientoDTO::from).collect(Collectors.toList());
         return new ResponseEntity<>(movimientoDTOS, HttpStatus.OK);
     }
+    @PatchMapping("/empresas/{id}/movimiento/{mov_id}")
+    public ResponseEntity<MovimientoDTO> update(@PathVariable final Integer id,
+                                              @PathVariable final Integer mov_id,
+                                              @RequestBody MovimientoDTO mov) throws Exception {
+        Empresa empresa = serv.readById(id);
+        MovimientoDinero movimientoDinero = sermov.findById(mov_id);
+        if (empresa == null) {
+            throw new ModelNotFoundException("Id no encontrado: " + id);
+        } else {
+            if (movimientoDinero == null){
+                throw new ModelNotFoundException("id no encontrado"+mov_id);
+            }
+            else {
+                movimientoDinero.setMonto(mov.getMonto());
+                movimientoDinero.setTipo(mov.getTipo());
+                movimientoDinero.setConcepto(mov.getConcepto());
+            }
+        }
+        return new ResponseEntity<>(MovimientoDTO.from(movimientoDinero), HttpStatus.OK);
+    }
+
     @PostMapping("/movimiento")
     public ResponseEntity<MovimientoDTO> create(@RequestBody final MovimientoDTO movimientoDTO) throws Exception {
         MovimientoDinero movimientoDinero = sermov.create(MovimientoDinero.from(movimientoDTO));
@@ -114,10 +136,10 @@ public class EmpresaController {
         return new ResponseEntity<>(EmpresasDTO.from(empresa), HttpStatus.OK);
     }
 
-    @DeleteMapping("/empresas/{id}/empleados/{mov_id}/remove")
-    public ResponseEntity<EmpresasDTO> removeMov(@PathVariable final Integer emp_id,
-                                                      @PathVariable final Integer empl_id) throws Exception {
-        Empresa empresa = serv.removeMov(emp_id, empl_id);
+    @DeleteMapping("/empresas/{id}/movimiento/{mov_id}/remove")
+    public ResponseEntity<EmpresasDTO> removeMov(@PathVariable final Integer id,
+                                                      @PathVariable final Integer mov_id) throws Exception {
+        Empresa empresa = serv.removeMov(id, mov_id);
         return new ResponseEntity<>(EmpresasDTO.from(empresa), HttpStatus.OK);
     }
 

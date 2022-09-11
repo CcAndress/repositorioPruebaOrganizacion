@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class MovimientoDTO {
         MovimientoDTO movimientoDTO = new MovimientoDTO();
         movimientoDTO.setId_mov(movimientoDinero.getId_mov());
         movimientoDTO.setMonto(movimientoDinero.getMonto());
+        movimientoDTO.setTipo(movimientoDinero.getTipo());
         movimientoDTO.setConcepto(movimientoDinero.getConcepto());
         if(Objects.nonNull(movimientoDinero.getEmpleado())){
             movimientoDTO.setEmple_ref(PlainEmpleadoDTO.from(movimientoDinero.getEmpleado()));
